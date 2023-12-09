@@ -18,12 +18,12 @@ export default function YourUniqueResult() {
     width: '640',
     playerVars: {
       autoplay: 1,      // 自動再生をオンにする
-      // controls: 0,      // プレーヤーのコントロールを非表示にする
-      // disablekb: 1,     // キーボード操作を無効にする
-      // fs: 0,            // 全画面表示ボタンを非表示にする
-      // modestbranding: 1,// YouTubeロゴを最小限にする
-      // rel: 0,           // 関連動画を表示しない
-      // showinfo: 0       // 動画の情報を表示しない
+      controls: 0,      // プレーヤーのコントロールを非表示にする
+      disablekb: 1,     // キーボード操作を無効にする
+      fs: 0,            // 全画面表示ボタンを非表示にする
+      modestbranding: 1,// YouTubeロゴを最小限にする
+      rel: 0,           // 関連動画を表示しない
+      showinfo: 0       // 動画の情報を表示しない
     },
   };
 

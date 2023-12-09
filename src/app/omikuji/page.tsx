@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Box, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 import YouTube from 'react-youtube';
 
-export default function daikichi() {
+export default function Daikichi() {
     const [videoEnded, setVideoEnded] = useState(false);
     const [openFirstModal, setOpenFirstModal] = useState(false);
     const [openSecondModal, setOpenSecondModal] = useState(false);

@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Box, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 import YouTube from 'react-youtube';
 
-export default function your_unique_result() {
+export default function YourUniqueResult() {
   const [videoEnded, setVideoEnded] = useState(false);
   const [openFirstModal, setOpenFirstModal] = useState(false);
   const [openSecondModal, setOpenSecondModal] = useState(false);

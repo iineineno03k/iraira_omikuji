@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react'
-import { Box, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
+import { Box, Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography } from '@mui/material';
 import YouTube from 'react-youtube';
 
 export default function Daikichi() {
@@ -8,6 +8,10 @@ export default function Daikichi() {
     const [openFirstModal, setOpenFirstModal] = useState(false);
     const [openSecondModal, setOpenSecondModal] = useState(false);
     const [showFinalContent, setShowFinalContent] = useState(false);
+
+    const text = "おみくじの結果は「大吉」でした\n#いらいらおみくじ";
+    const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+    const lineUrl = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(text)}`;
 
     const youtubeOptions = {
         height: '390',
@@ -51,7 +55,11 @@ export default function Daikichi() {
                     justifyContent: 'center', // 水平方向の中央揃え
                     alignItems: 'center',     // 垂直方向の中央揃え
                     height: '80vh',          // ビューポートの高さを100%に設定
+                    flexDirection: 'column',
                 }}>
+                    <Typography sx={{ textAlign: 'center' }}>
+                        動画を視聴し終えた後に結果が表示されます。
+                    </Typography>
                     <Box sx={{
                         position: 'relative',
                         paddingBottom: '56.25%', // 16:9のアスペクト比
@@ -78,7 +86,7 @@ export default function Daikichi() {
 
             <Dialog open={openFirstModal} onClose={handleFirstModalClose}>
                 <DialogTitle>本当に結果を見ますか？</DialogTitle>
-                <DialogContent>あなたの運勢が決まってしまいますよ、、、？</DialogContent>
+                <DialogContent>この先に行くとあなたの運勢が決まってしまいますよ、、、？</DialogContent>
                 <DialogActions>
                     <Button onClick={handleFirstModalClose}>見る</Button>
                 </DialogActions>
@@ -88,12 +96,45 @@ export default function Daikichi() {
                 <DialogTitle>本当の本当にいいんですね？</DialogTitle>
                 <DialogContent>この選択があなたの運命を決めることになります。</DialogContent>
                 <DialogActions>
-                    <Button onClick={handleSecondModalClose}>OK</Button>
+                    <Button onClick={handleSecondModalClose}>運勢を確認</Button>
                 </DialogActions>
             </Dialog>
 
             {showFinalContent && (
-                <div>おめでとう！大吉です！！</div>
+                <Box sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    height: '80vh',
+                }}>
+                    <Typography variant="h2" component="div" sx={{ textAlign: 'center' }}>
+                        おめでとう！
+                        大吉です！！
+                    </Typography>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => window.open(tweetUrl, '_blank')}
+                        sx={{ mt: 2 }}
+                    >
+                        結果をXで共有
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => window.open(lineUrl, '_blank')}
+                        sx={{
+                            mt: 2,
+                            backgroundColor: 'green', // ボタンの背景色を緑色に設定
+                            '&:hover': {
+                                backgroundColor: 'darkgreen' // ホバー時の背景色を暗い緑色に設定
+                            }
+                        }}
+                    >
+                        結果をLINEで共有
+                    </Button>
+                </Box>
             )}
         </div>
     );

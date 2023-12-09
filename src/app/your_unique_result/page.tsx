@@ -1,10 +1,12 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Box, Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography } from '@mui/material';
 import YouTube from 'react-youtube';
 
 export default function YourUniqueResult() {
   const [videoEnded, setVideoEnded] = useState(false);
+  const [player, setPlayer] = useState(null);
+  const lastTimeRef = useRef(0);
   const [openFirstModal, setOpenFirstModal] = useState(false);
   const [openSecondModal, setOpenSecondModal] = useState(false);
   const [showFinalContent, setShowFinalContent] = useState(false);
@@ -28,14 +30,32 @@ export default function YourUniqueResult() {
   };
 
   const onYouTubeReady = (event) => {
-    // YouTube APIの準備ができたら自動再生
-    event.target.playVideo();
+    setPlayer(event.target);
   };
 
   const onYouTubeEnd = () => {
     setVideoEnded(true);
     setOpenFirstModal(true);
   };
+
+  const onPlayerStateChange = (event) => {
+    if (event.data === YouTube.PlayerState.PLAYING) {
+      checkPlaybackPosition(event.target);
+    }
+  };
+
+  const checkPlaybackPosition = (player) => {
+    if (player && player.getCurrentTime) {
+      const currentTime = player.getCurrentTime();
+      if (currentTime > lastTimeRef.current + 1) {
+        player.seekTo(lastTimeRef.current, true);
+      } else {
+        lastTimeRef.current = currentTime;
+      }
+      setTimeout(() => checkPlaybackPosition(player), 1000);
+    }
+  };
+
 
   const handleFirstModalClose = () => {
     setOpenFirstModal(false);
@@ -79,6 +99,7 @@ export default function YourUniqueResult() {
               opts={youtubeOptions}
               onReady={onYouTubeReady}
               onEnd={onYouTubeEnd}
+              onStateChange={onPlayerStateChange}
             />
           </Box>
         </Box>
